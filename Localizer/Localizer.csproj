@@ -72,8 +72,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="LocalizableStringVisitor.cs" />
+    <Compile Include="PotGenerator.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WinFormsDesignerRewriter.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

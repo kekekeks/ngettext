@@ -14,26 +14,16 @@ namespace Localizer
         {
             var sol = new Solution(args[0]);
             sol.CreateCompilationUnitsForAllPojects();
-            var visitor = new LocalizableStringVisitor();
-            foreach (var proj in sol.Projects)
+            if (args.Length > 1)
             {
-                foreach (var file in proj.Files)
+                if (args[1] == "--designer.cs")
                 {
-                    if (file.Name.EndsWith("cs"))
-                    {
-                        foreach (var type in file.SyntaxTree.GetTypes().OfType<TypeDeclaration>())
-                            visitor.VisitTypeDeclaration(type);
-                    }
+                    WinFormsDesignerRewriter.Rewrite(sol);
+                    return;
                 }
             }
-            var t = new SecondLanguage.GettextPOTranslation();
-            foreach (var s in visitor.Found)
-            {
-                t.SetString(s, s);
-            }
-            var pot = args.Length > 1 ? args[1] : sol.Name + ".pot";
-            t.SetHeader("Project-Id-Version", sol.Name);
-            t.Save(pot);
+            var pot = args.Length > 1 ? args[1] : (sol.Name + ".pot");
+            PotGenerator.Generate(sol, pot);
             Console.WriteLine("Written to " + pot);
 
         }
