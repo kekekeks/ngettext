@@ -1,0 +1,546 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>SecondLanguage</name>
+    </assembly>
+    <members>
+        <member name="T:SecondLanguage.GettextTranslation">
+            <summary>
+            Provides common functionality for Gettext files.
+            </summary>
+        </member>
+        <member name="T:SecondLanguage.Translation">
+            <summary>
+            Provides functionality common to all translation types.
+            </summary>
+        </member>
+        <member name="M:SecondLanguage.Translation.Clear">
+            <summary>
+            Resets the translation to a default state.
+            All translated strings will be removed.
+            </summary>
+        </member>
+        <member name="M:SecondLanguage.Translation.Load(System.Byte[])">
+            <summary>
+            Loads a file from a buffer.
+            </summary>
+            <param name="buffer">The buffer to load from.</param>
+        </member>
+        <member name="M:SecondLanguage.Translation.Load(System.String)">
+            <summary>
+            Loads a file from disk.
+            </summary>
+            <param name="filename">The name of the file to load.</param>
+        </member>
+        <member name="M:SecondLanguage.Translation.Load(System.IO.Stream)">
+            <summary>
+            Loads a file from a stream.
+            </summary>
+            <param name="stream">The stream to load from.</param>
+        </member>
+        <member name="M:SecondLanguage.Translation.Save">
+            <summary>
+            Saves the file into a buffer.
+            </summary>
+            <returns>A buffer containing the saved Gettext file.</returns>
+        </member>
+        <member name="M:SecondLanguage.Translation.Save(System.String)">
+            <summary>
+            Saves the file to disk.
+            </summary>
+            <param name="filename">The filename to save to.</param>
+        </member>
+        <member name="M:SecondLanguage.Translation.Save(System.IO.Stream)">
+            <summary>
+            Saves the file to a stream.
+            </summary>
+            <param name="stream">The stream to save to.</param>
+        </member>
+        <member name="M:SecondLanguage.Translation.GetString(System.String,System.String)">
+            <summary>
+            Gets the translated string corresponding to <paramref name="id"/>.
+            </summary>
+            <param name="id">The translation key.</param>
+            <param name="context">The context, if any, or <c>null</c>.</param>
+            <returns>The translated string, or <c>null</c> if none is set.</returns>
+        </member>
+        <member name="M:SecondLanguage.Translation.GetPluralString(System.String,System.String,System.Int64,System.String)">
+            <summary>
+            Gets the translated string corresponding to <paramref name="id"/> and <paramref name="idPlural"/>
+            appropriate for the numeric value <paramref name="value"/>.
+            </summary>
+            <param name="id">The singular translation key.</param>
+            <param name="idPlural">The plural translation key.</param>
+            <param name="value">The value to look up the plural string for.</param>
+            <param name="context">The context, if any, or <c>null</c>.</param>
+            <returns>The translated string, or <c>null</c> if none is set.</returns>
+        </member>
+        <member name="M:SecondLanguage.Translation.SetString(System.String,System.String,System.String)">
+            <summary>
+            Sets the translated string corresponding to <paramref name="id"/>.
+            </summary>
+            <param name="id">The translation key.</param>
+            <param name="translation">The translated string.</param>
+            <param name="context">The context, if any, or <c>null</c>.</param>
+        </member>
+        <member name="M:SecondLanguage.Translation.MakeReadOnly">
+            <summary>
+            Makes the <see cref="T:SecondLanguage.GettextTranslation"/> read-only.
+            </summary>
+        </member>
+        <member name="P:SecondLanguage.Translation.IsReadOnly">
+            <summary>
+            <c>null</c> if the file cannot be modified.
+            </summary>
+        </member>
+        <member name="M:SecondLanguage.GettextTranslation.GetGettextKeys">
+            <summary>
+            Retrieves the <see cref="T:SecondLanguage.GettextKey"/> of each untranslated string and its corresponding translated strings.
+            </summary>
+            <returns>Untranslated and translated strings.</returns>
+        </member>
+        <member name="M:SecondLanguage.GettextTranslation.GetHeader(System.String)">
+            <summary>
+            Gets the value of a header entry.
+            </summary>
+            <param name="key">The key of the header entry.</param>
+            <returns>The value of the header entry.</returns>
+        </member>
+        <member name="M:SecondLanguage.GettextTranslation.GetPluralStringByIndex(System.String,System.String,System.Int32,System.String)">
+            <summary>
+            Gets the translated string corresponding to <paramref name="id"/> and <paramref name="idPlural"/>.
+            <paramref name="index"/> should be determined by calling <see cref="M:SecondLanguage.GettextTranslation.GetPluralIndex(System.Int64)"/>.
+            </summary>
+            <param name="id">The singular translation key.</param>
+            <param name="idPlural">The plural translation key.</param>
+            <param name="index">The index of the plural string.</param>
+            <param name="context">The context, if any, or <c>null</c>.</param>
+            <returns>The translated string, or <c>null</c> if none is set.</returns>
+        </member>
+        <member name="M:SecondLanguage.GettextTranslation.SetHeader(System.String,System.String)">
+            <summary>
+            Sets the value of a header entry.
+            </summary>
+            <param name="key">The key of the header entry.</param>
+            <param name="value">The value of the header entry.</param>
+        </member>
+        <member name="M:SecondLanguage.GettextTranslation.SetPluralString(System.String,System.String,System.String[],System.String)">
+            <summary>
+            Sets the translated strings corresponding to <paramref name="id"/> and <paramref name="idPlural"/>.
+            </summary>
+            <param name="id">The singular translation key.</param>
+            <param name="idPlural">The plural translation key.</param>
+            <param name="translations">The translated strings.</param>
+            <param name="context">The context, if any, or <c>null</c>.</param>
+        </member>
+        <member name="M:SecondLanguage.GettextTranslation.GetPluralIndex(System.Int64)">
+            <summary>
+            Gets the index of the plural string for a particular value.
+            </summary>
+            <param name="value">The value a translation is needed for.</param>
+            <returns>The index of the plural string.</returns>
+        </member>
+        <member name="P:SecondLanguage.GettextTranslation.Encoding">
+            <summary>
+            The encoding of the Gettext file.
+            A good choice is UTF-8.
+            </summary>
+        </member>
+        <member name="T:SecondLanguage.GettextKey">
+            <summary>
+            Used to refer to sets of strings in Gettext-style translations.
+            </summary>
+        </member>
+        <member name="M:SecondLanguage.GettextKey.#ctor(System.String,System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:SecondLanguage.GettextKey"/> structure.
+            </summary>
+            <param name="id">The singular translation key.</param>
+            <param name="idPlural">The plural translation key, if any, or <c>null</c>.</param>
+            <param name="context">The context, if any, or <c>null</c>.</param>
+        </member>
+        <member name="M:SecondLanguage.GettextKey.Equals(System.Object)">
+            <inheritdoc />
+        </member>
+        <member name="M:SecondLanguage.GettextKey.Equals(SecondLanguage.GettextKey)">
+            <summary>
+            Tests the <see cref="T:SecondLanguage.GettextKey"/> for equality with another <see cref="T:SecondLanguage.GettextKey"/>.
+            </summary>
+            <param name="key">The key to compare with.</param>
+            <returns>True if the keys are identical.</returns>
+        </member>
+        <member name="M:SecondLanguage.GettextKey.GetHashCode">
+            <inheritdoc />
+        </member>
+        <member name="M:SecondLanguage.GettextKey.FromMOKeyString(System.String)">
+            <summary>
+            Converts from the .mo file binary key string format to a <see cref="T:SecondLanguage.GettextKey"/>.
+            </summary>
+            <param name="keyString">The key string.</param>
+            <returns>A <see cref="T:SecondLanguage.GettextKey"/>.</returns>
+        </member>
+        <member name="M:SecondLanguage.GettextKey.ToMOKeyString">
+            <summary>
+            Converts the <see cref="T:SecondLanguage.GettextKey"/> into the binary key string format used by .mo files.
+            </summary>
+            <returns>A key string.</returns>
+        </member>
+        <member name="M:SecondLanguage.GettextKey.ToString">
+            <inheritdoc />
+        </member>
+        <member name="M:SecondLanguage.GettextKey.op_Implicit(System.String)~SecondLanguage.GettextKey">
+            <summary>
+            Converts a translation key into a <see cref="T:SecondLanguage.GettextKey"/>.
+            This implicit conversion does not include a plural translation key or a context.
+            </summary>
+            <param name="id">The translation key.</param>
+            <returns>A new <see cref="T:SecondLanguage.GettextKey"/>.</returns>
+        </member>
+        <member name="P:SecondLanguage.GettextKey.ID">
+            <summary>
+            The singular translation key.
+            </summary>
+        </member>
+        <member name="P:SecondLanguage.GettextKey.IDPlural">
+            <summary>
+            The plural translation key, if any, or <c>null</c>.
+            </summary>
+        </member>
+        <member name="P:SecondLanguage.GettextKey.Context">
+            <summary>
+            The context, if any, or <c>null</c>.
+            </summary>
+        </member>
+        <member name="T:SecondLanguage.GettextMOTranslation">
+            <summary>
+            Loads and saves Gettext .mo files and provides lower-level access to strings.
+            </summary>
+        </member>
+        <member name="M:SecondLanguage.GettextMOTranslation.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:SecondLanguage.GettextMOTranslation"/> class.
+            </summary>
+        </member>
+        <member name="M:SecondLanguage.GettextMOTranslation.GetGettextKeys">
+            <inheritdoc />
+        </member>
+        <member name="P:SecondLanguage.GettextMOTranslation.IsLittleEndian">
+            <summary>
+            <c>true</c> if the .mo file is little-endian.
+            <c>false</c> if it is big-endian.
+            </summary>
+        </member>
+        <member name="T:SecondLanguage.SpecialFormatters">
+            <summary>
+            Most Gettext files have non-.NET format strings.
+            Pass these methods to <see cref="P:SecondLanguage.Translator.FormatCallback"/>.
+            </summary>
+        </member>
+        <member name="M:SecondLanguage.SpecialFormatters.C(System.String,System.Object[])">
+            <summary>
+            Applies C printf style formatting.
+            
+            The POSIX positional argument extension is supported.
+            </summary>
+            <param name="format">The format string.</param>
+            <param name="args">Arguments to replace the format string's placeholders with.</param>
+            <returns>The formatted translated string.</returns>
+        </member>
+        <member name="M:SecondLanguage.SpecialFormatters.CustomC(System.IFormatProvider,System.String,System.Object[])">
+            <summary>
+            Applies C printf style formatting, using a specific format provider.
+            </summary>
+            <param name="provider">The format provider to use, or <c>null</c> for the system default.</param>
+            <param name="format">The format string.</param>
+            <param name="args">Arguments to replace the format string's placeholders with.</param>
+            <returns>The formatted translated string.</returns>
+        </member>
+        <member name="T:SecondLanguage.GettextPluralConverterFunc">
+            <summary>
+            Converts a value into a plural index.
+            If need be, a function to perform this conversion can be obtained from <see cref="T:SecondLanguage.GettextPluralParser"/>.
+            </summary>
+            <param name="value">The value.</param>
+            <returns>The plural index.</returns>
+        </member>
+        <member name="T:SecondLanguage.GettextPluralParser">
+            <summary>
+            Parses the Gettext Plural-Forms header.
+            </summary>
+        </member>
+        <member name="M:SecondLanguage.GettextPluralParser.Parse(System.String,System.Int32@,SecondLanguage.GettextPluralConverterFunc@)">
+            <summary>
+            Parses a Gettext Plural-Forms header, returning the number of plurals and
+            a function that converts quantities into string indices.
+            </summary>
+            <param name="pluralForms">The value of the Plural-Forms header.</param>
+            <param name="nplurals">The number of plurals.</param>
+            <param name="valueToIndexFunc">A function that converts quantities into string indices.</param>
+        </member>
+        <member name="T:SecondLanguage.GettextPOTranslation">
+            <summary>
+            Loads and saves Gettext .po files and provides lower-level access to strings.
+            </summary>
+            TODO: Switch over to GettextKey. This earlier way of using .mo strings is a bit ugly. :)
+        </member>
+        <member name="M:SecondLanguage.GettextPOTranslation.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:SecondLanguage.GettextPOTranslation"/> class.
+            </summary>
+        </member>
+        <member name="M:SecondLanguage.GettextPOTranslation.GetGettextKeys">
+            <inheritdoc />
+        </member>
+        <member name="M:SecondLanguage.GettextPOTranslation.ToString">
+            <summary>
+            Saves the text representation of the .po file to a string.
+            The current encoding is used.
+            </summary>
+            <returns>The string.</returns>
+        </member>
+        <member name="T:SecondLanguage.TranslatorFormatCallback">
+            <summary>
+            Called by <see cref="T:SecondLanguage.Translator"/> to format translated strings.
+            </summary>
+            <param name="format">The format string.</param>
+            <param name="args">Arguments to replace the format string's placeholders with.</param>
+            <returns>The formatted translated string.</returns>
+        </member>
+        <member name="T:SecondLanguage.Translator">
+            <summary>
+            Translates strings.
+            This is the primary class to interact with in this library, unless you are making an editor.
+            Create yourself a global instance to refer to from all parts of your code.
+            </summary>
+        </member>
+        <member name="M:SecondLanguage.Translator.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:SecondLanguage.Translator"/> class.
+            No translations are added automatically.
+            </summary>
+        </member>
+        <member name="M:SecondLanguage.Translator.ClearTranslationList">
+            <summary>
+            Clears the list of translation files.
+            Without any translations, <see cref="M:SecondLanguage.Translator.Translate(System.String,System.Object[])"/> will return the strings it is passed.
+            This is a good place to start if you are using your native language's strings as
+            translation keys.
+            </summary>
+        </member>
+        <member name="M:SecondLanguage.Translator.RegisterTranslation(SecondLanguage.Translation)">
+            <summary>
+            Registers a translation file.
+            Because translations are evaluated in the order they are added,
+            be sure to add the main language first and fallbacks later.
+            </summary>
+            <param name="file">The file to register.</param>
+        </member>
+        <member name="M:SecondLanguage.Translator.RegisterTranslation(System.String,System.String)">
+            <summary>
+            Registers a translation file, loaded from disk.
+            Because translations are evaluated in the order they are added,
+            be sure to add the main language first and fallbacks later.
+            </summary>
+            <param name="filename">The name of the file to load and register.</param>
+            <param name="rootDirectory">
+                The root directory. If you specify a full path in <paramref name="filename"/>,
+                this has no effect.
+                
+                If this is <c>null</c>, the assembly resolver base directory (which is
+                normally your program directory) is used.
+            </param>
+            <returns>The newly-registered translation.</returns>
+        </member>
+        <member name="M:SecondLanguage.Translator.TryRegisterTranslation(System.String,System.String)">
+            <summary>
+            Tries to load and register a translation.
+            Because translations are evaluated in the order they are added,
+            be sure to add the main language first and fallbacks later.
+            Use this variant if you don't want or need the new <see cref="T:SecondLanguage.Translation"/> object.
+            </summary>
+            <param name="filename">The name of the file to load and register.</param>
+            <param name="rootDirectory">
+                The root directory. If you specify a full path in <paramref name="filename"/>,
+                this has no effect.
+                
+                If this is <c>null</c>, the assembly resolver base directory (which is
+                normally your program directory) is used.
+            </param>
+            <returns><c>true</c> if the file loaded successfully.</returns>
+        </member>
+        <member name="M:SecondLanguage.Translator.TryRegisterTranslation(System.String,SecondLanguage.Translation@,System.String)">
+            <summary>
+            Tries to load and register a translation.
+            Because translations are evaluated in the order they are added,
+            be sure to add the main language first and fallbacks later.
+            Use this variant if you want to get back the new <see cref="T:SecondLanguage.Translation"/> object.
+            </summary>
+            <param name="filename">The name of the file to load and register.</param>
+            <param name="translation">The newly-registered translation.</param>
+            <param name="rootDirectory">
+                The root directory. If you specify a full path in <paramref name="filename"/>,
+                this has no effect.
+                
+                If this is <c>null</c>, the assembly resolver base directory (which is
+                normally your program directory) is used.
+            </param>
+            <returns><c>true</c> if the file loaded successfully.</returns>
+        </member>
+        <member name="M:SecondLanguage.Translator.RegisterTranslationsBySearchPattern(System.String,System.String)">
+            <summary>
+            Adds translations found using a search pattern.
+            </summary>
+            <param name="searchPattern">
+                The search pattern.
+                
+                For example, language\*.po will look for all .po files in the language subdirectory
+                of the root directory.
+            </param>
+            <param name="rootDirectory">
+                The root directory for the search.
+                
+                If this is <c>null</c>, the search will begin from the assembly resolver base directory,
+                which normally is your program directory. This is typically what you want.
+            </param>
+            <returns>Newly-registered translations.</returns>
+        </member>
+        <member name="M:SecondLanguage.Translator.RegisterTranslationsByCulture(System.String,System.Globalization.CultureInfo,System.String)">
+            <summary>
+            Adds translations found using a culture-specific search pattern.
+            </summary>
+            <param name="searchPattern">
+                The search pattern.
+                
+                <see cref="M:System.String.Format(System.String,System.Object)"/> is called on this pattern with a culture name.
+                For example, for the en-US culture, a pattern of locale\{0}\LC_MESSAGES\*.mo will search for all .mo files
+                in locale\en-US\LC_MESSAGES as well as locale\en\LC_MESSAGES.
+            </param>
+            <param name="culture">
+                The culture to find translations for.
+                If this is <c>null</c>, the user's current UI culture will be used.
+            </param>
+            <param name="rootDirectory">
+                The root directory for the search.
+                
+                If this is <c>null</c>, the search will begin from the assembly resolver base directory,
+                which normally is your program directory. This is typically what you want.
+            </param>
+            <returns>Newly-registered translations.</returns>
+        </member>
+        <member name="M:SecondLanguage.Translator.RegisterTranslationsByCulture(System.String[],System.Globalization.CultureInfo[],System.String)">
+            <summary>
+            Adds translations found using culture-specific search patterns.
+            </summary>
+            <param name="searchPatterns">
+                Search patterns.
+                
+                <see cref="M:System.String.Format(System.String,System.Object)"/> is called on each pattern with a culture name.
+                For example, for the en-US culture, a pattern of locale/{0}/LC_MESSAGES/*.mo will search for all .mo files
+                in locale/en-US/LC_MESSAGES as well as locale/en/LC_MESSAGES.
+            </param>
+            <param name="cultures">
+                The cultures to find translations for.
+                If this is <c>null</c>, the user's current UI culture will be used.
+            </param>
+            <param name="rootDirectory">
+                The root directory for the search.
+                
+                If this is <c>null</c>, the search will begin from the assembly resolver base directory,
+                which normally is your program directory. This is typically what you want.
+            </param>
+            <returns>Newly-registered translations.</returns>
+        </member>
+        <member name="M:SecondLanguage.Translator.Translate(System.String,System.Object[])">
+            <summary>
+            Translates a string.
+            </summary>
+            <param name="id">The translation key. For Gettext projects, this is typically an untranslated string.</param>
+            <param name="args">Arguments to replace the format string's placeholders with.</param>
+            <returns>The translated string, or the formatted translation key if none is set.</returns>
+        </member>
+        <member name="M:SecondLanguage.Translator.TranslateContextual(System.String,System.String,System.Object[])">
+            <summary>
+            Translates a string in a given context.
+            </summary>
+            <param name="context">The context, if any, or <c>null</c>.</param>
+            <param name="id">The translation key. For Gettext projects, this is typically an untranslated string.</param>
+            <param name="args">Arguments to replace the format string's placeholders with.</param>
+            <returns>The translated string, or the formatted translation key if none is set.</returns>
+        </member>
+        <member name="M:SecondLanguage.Translator.TranslatePlural(System.String,System.String,System.Int64,System.Object[])">
+            <summary>
+            Translates a string with distinct singular and plural forms.
+            </summary>
+            <param name="id">The singular translation key. For Gettext projects, this is typically a singular untranslated string.</param>
+            <param name="idPlural">The plural translation key. For Gettext projects, this is typically a plural untranslated string.</param>
+            <param name="value">The value to look up the plural string for.</param>
+            <param name="args">Arguments to replace the format string's placeholders with.</param>
+            <returns>The translated string, or the formatted translation key if none is set.</returns>
+        </member>
+        <member name="M:SecondLanguage.Translator.TranslateContextualPlural(System.String,System.String,System.String,System.Int64,System.Object[])">
+            <summary>
+            Translates a string with distinct singular and plural forms, in a given context.
+            </summary>
+            <param name="context">The context, if any, or <c>null</c>.</param>
+            <param name="id">The singular translation key. For Gettext projects, this is typically a singular untranslated string.</param>
+            <param name="idPlural">The plural translation key. For Gettext projects, this is typically a plural untranslated string.</param>
+            <param name="value">The value to look up the plural string for.</param>
+            <param name="args">Arguments to replace the format string's placeholders with.</param>
+            <returns>The translated string, or the formatted translation key if none is set.</returns>
+        </member>
+        <member name="M:SecondLanguage.Translator.MakeReadOnly">
+            <summary>
+            Makes the <see cref="T:SecondLanguage.Translator"/> read-only.
+            </summary>
+        </member>
+        <member name="P:SecondLanguage.Translator.FormatCallback">
+            <summary>
+            The callback used for formatting strings.
+            You can use this to replace the default <see cref="M:System.String.Format(System.String,System.Object)"/>,
+            if for instance your translation keys are C-style.
+            </summary>
+        </member>
+        <member name="P:SecondLanguage.Translator.IsReadOnly">
+            <summary>
+            <c>true</c> if the file cannot be modified.
+            The translations may still be modifiable. Call <see cref="M:SecondLanguage.Translation.MakeReadOnly"/>
+            on the translations if you do not want them to be editable either.
+            </summary>
+        </member>
+        <member name="P:SecondLanguage.Translator.Parent">
+            <summary>
+            The parent translator.
+            If a string is not set in the current translation list, the parent's is checked.
+            </summary>
+        </member>
+        <member name="P:SecondLanguage.Translator.ThrowOnFormatExceptions">
+            <summary>
+            Normally, if a <see cref="T:System.FormatException"/> is thrown for a translated string,
+            it is ignored and the fallback is used. If all fallbacks fail, the translation key
+            is used. If this fails to format as well, the unformatted translation key is returned.
+            This is so translation calls can never crash your program, even if the translation
+            is formatted incorrectly in a particular language.
+            
+            If you dislike this behavior, you can re-enable the exception.
+            </summary>
+        </member>
+        <member name="P:SecondLanguage.Translator.TranslationList">
+            <summary>
+            The list of translation files currently in use.
+            </summary>
+        </member>
+        <member name="P:SecondLanguage.Translator.Item(System.String,System.Object[])">
+            <summary>
+            Translates a string.
+            </summary>
+            <param name="id">The translation key. For Gettext projects, this is typically an untranslated string.</param>
+            <param name="args">Arguments to replace the format string's placeholders with.</param>
+            <returns>The translated string, or the formatted translation key if none is set.</returns>
+        </member>
+        <member name="P:SecondLanguage.Translator.Default">
+            <summary>
+            A default <see cref="T:SecondLanguage.Translator"/>.
+            </summary>
+        </member>
+    </members>
+</doc>
