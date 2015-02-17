@@ -12,7 +12,7 @@ namespace Localizer
     {
         public static void Generate(Solution sol, string output)
         {
-            
+            var hset = new HashSet<string>();
             var visitor = new LocalizableStringVisitor();
             foreach (var proj in sol.Projects)
             {
@@ -28,7 +28,8 @@ namespace Localizer
             var t = new SecondLanguage.GettextPOTranslation();
             foreach (var s in visitor.Found)
             {
-                t.SetString(s, s);
+                if (hset.Add(s))
+                    t.SetString(s, s);
             }
             t.SetHeader("Project-Id-Version", sol.Name);
             
